@@ -1,17 +1,35 @@
 .test-suite {
-	padding: 5px 10px;
 	color: #205791;
 	background: #79b4dc;
 }
 
 .test-suite.pass {
 	color: #264409;
-	background: #c6d880;
-}
+	border-top: 1px solid #264409;
+	background: #c6d880; }
+	.test-suite.pass .test {
+		border-top: 1px solid #264409;
+		background: #edff9d;
+
+	}
 
 .test-suite.failure {
 	color: #8a1f11;
 	background: #fbe3e4;
+	border-top: 1px solid #8a1f11; }
+	.test-suite.failure .test {
+		background: #ffefef;
+		border-top: 1px solid #8a1f11;
+	}
+	.test-suite.failure .test .panel {
+		padding: 5px 10px;
+		border-top: 1px solid #8a1f11;
+	}
+
+.test-suite .test.pass {
+	color: #264409;
+	border-top: 1px solid #264409;
+	background: #edff9d;
 }
 
 .suite-title .expand {
@@ -25,10 +43,10 @@
 
 
 .test {}
-	.test-title {}
+	.test-title { padding: 5px 10px; }
 		.test-title .buttons {
 			display: inline-block;
-			width: 40px; }
+			width: 30px; }
 			.test-title .buttons a {
 				display: inline-block;
 				width: 10px;
@@ -40,7 +58,8 @@
 			.test-title .buttons .output { background: #747; }
 
 
-.suite-title {}
+.suite-title {
+	padding: 5px 10px;}
 	.suite-title .count {
 		float: right;
 	}
@@ -55,8 +74,10 @@
 .minus, .plus {
 	display: inline-block;
 	margin: 0 5px 0;
+	padding: 0 5px;
 	border: 1px solid #8a1f11;
 	border-radius: 3px;
+	background: #fff;
 	cursor: pointer;
 }
 
@@ -66,4 +87,24 @@
 
 .number {
 	float: left;
+}
+
+.trace-file {
+	margin: 10px 0;
+}
+
+.code {
+	background: #fff;
+	color: #555; }
+	.code pre {
+		margin: 0;
+		padding: 0 5px;
+		overflow: auto;
+		border: 1px solid #8a1f11;
+	}
+
+.ln {
+	display: inline-block;
+	padding-right: 5px;
+	border-right: 1px solid #999;
 }

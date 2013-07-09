@@ -5,7 +5,7 @@
  */
 class WuController extends CController
 {
-	public $layout='/layouts/tests';
+	public $layout='tests';
 
 	public function getPageTitle()
 	{
@@ -34,12 +34,16 @@ class WuController extends CController
 	public function actionWeb($test)
 	{
 		$unit = new WuTestRunner();
-		$unit->addTest(WuWebTestFile::fromRelativePathName($test));
-		echo $unit->run();
+		$unit->addTest(WuUnitTestFile::fromRelativePathName($test));
+		$this->render('unit', array(
+			'data'     => $unit->run(),
+			'testName' => $test
+		));
 	}
 
 	public function actionError()
 	{
+		$this->layout = 'column1';
 		if($error=Yii::app()->errorHandler->error)
 		{
 			if(Yii::app()->request->isAjaxRequest)
@@ -54,6 +58,7 @@ class WuController extends CController
 	 */
 	public function actionLogin()
 	{
+		$this->layout = 'column1';
 		$model=Yii::createComponent('webunit.models.WuLoginForm');
 
 		// collect user input data

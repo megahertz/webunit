@@ -49,7 +49,7 @@ Yii::app()->getClientScript()->registerScriptFile(
 						<?php if (!$test->isPassed()): ?>
 							<div class="details">
 								<?php if ($test->trace): ?>
-									<div class="trace-panel" style="display:none">
+									<div class="trace-panel panel" style="display:none">
 										<?php $count = 0 ?>
 										<?php foreach($test->trace as $n => $trace): ?>
 											<?php
@@ -90,7 +90,7 @@ Yii::app()->getClientScript()->registerScriptFile(
 								<?php endif ?>
 
 								<?php if ($test->output): ?>
-									<div class="output panel" style="display:none">
+									<div class="output-panel panel" style="display:none">
 										<?php echo $test->output ?>
 									</div>
 								<?php endif ?>
