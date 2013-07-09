@@ -3,12 +3,12 @@ webunit
 
 Yii PHPUnit web interface
 
-It's first alpha version, but you can use it now. It does not require installed PHPUnit
+It's first alpha version, but you can use it now. It does not require PHPUnit installed
 
 Install
 =======
 1. Clone the code
-```bash
+```
 cd protected/extensions
 git clone git@github.com:megahertz/webunit.git
 ```
