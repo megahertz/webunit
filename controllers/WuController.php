@@ -9,10 +9,10 @@ class WuController extends CController
 
 	public function getPageTitle()
 	{
-		if($this->action->id==='index')
-			return 'Webunit: a Web-based phpunit test runner for Yii';
-		else
-			return 'Webunit - '.ucfirst($this->action->id).' test';
+		if (isset($_GET['test'])) {
+			return 'Webunit - ' . CHtml::encode($_GET['test']) . ' test';
+		}
+		return 'Webunit: PHPUnit web interface for Yii';
 	}
 
 	public function actionIndex()

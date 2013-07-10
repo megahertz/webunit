@@ -46,56 +46,63 @@ Yii::app()->getClientScript()->registerScriptFile(
 								</span>
 							<?php endif ?>
 						</div>
-						<?php if (!$test->isPassed()): ?>
-							<div class="details">
-								<?php if ($test->trace): ?>
-									<div class="trace-panel panel" style="display:none">
-										<?php $count = 0 ?>
-										<?php foreach($test->trace as $n => $trace): ?>
-											<?php
-												if($this->__isCoreCode($trace))
-													$cssClass='core collapsed';
-												elseif(++$count>3)
-													$cssClass='app collapsed';
-												else
-													$cssClass='app expanded';
-												$hasCode=$trace['file']!=='unknown' && is_file($trace['file']);
-											?>
-											<div class="trace <?php echo $cssClass ?>">
-												<span class="number">#<?php echo $n ?></span>
-												<div class="content">
-													<div class="trace-file">
-														<?php if($hasCode): ?>
-															<span class="plus">+</span>
-															<span class="minus">–</span>
-														<?php endif; ?>
-														<?php
-														echo '&nbsp;';
-														echo htmlspecialchars($trace['file'],ENT_QUOTES,Yii::app()->charset)."(".$trace['line'].")";
-														echo ': ';
-														if(!empty($trace['class']))
-															echo "<strong>{$trace['class']}</strong>{$trace['type']}";
+
+						<div class="details">
+
+							<?php if ($test->trace): ?>
+								<div class="trace-panel panel" style="display:none">
+									<?php $count = 0 ?>
+									<?php foreach($test->trace as $n => $trace): ?>
+										<?php
+											if($this->__isCoreCode($trace))
+												$cssClass='core collapsed';
+											elseif(++$count>3)
+												$cssClass='app collapsed';
+											else
+												$cssClass='app expanded';
+											$hasCode=$trace['file']!=='unknown' && is_file($trace['file']);
+										?>
+										<div class="trace <?php echo $cssClass ?>">
+											<span class="number">#<?php echo $n ?></span>
+											<div class="content">
+												<div class="trace-file">
+													<?php if($hasCode): ?>
+														<span class="plus">+</span>
+														<span class="minus">–</span>
+													<?php endif; ?>
+													<?php
+													echo '&nbsp;';
+													echo htmlspecialchars($trace['file'],ENT_QUOTES,Yii::app()->charset)."(".$trace['line'].")";
+													echo ': ';
+													if(!empty($trace['class']))
+														echo "<strong>{$trace['class']}</strong>{$trace['type']}";
+													if (isset($trace['function'])) {
 														echo "<strong>{$trace['function']}</strong>(";
 														if(!empty($trace['args']))
 															echo htmlspecialchars($this->argumentsToString($trace['args']),ENT_QUOTES,Yii::app()->charset);
 														echo ')';
-														?>
-													</div>
+													}
 
-													<?php if($hasCode) echo $this->renderSourceCode($trace['file'],$trace['line'],Yii::app()->errorHandler->maxSourceLines); ?>
+													?>
 												</div>
-											</div>
-										<?php endforeach ?>
-									</div>
-								<?php endif ?>
 
-								<?php if ($test->output): ?>
-									<div class="output-panel panel" style="display:none">
-										<?php echo $test->output ?>
+												<?php if($hasCode) echo $this->renderSourceCode($trace['file'],$trace['line'],Yii::app()->errorHandler->maxSourceLines); ?>
+											</div>
+										</div>
+									<?php endforeach ?>
+								</div>
+							<?php endif ?>
+
+							<?php if ($test->output): ?>
+								<div class="output-panel panel" style="display:none">
+									<div class="output">
+										<pre>
+											<?php echo $test->output ?>
+										</pre>
 									</div>
-								<?php endif ?>
-							</div>
-						<?php endif ?>
+								</div>
+							<?php endif ?>
+						</div>
 					</div>
 				<?php endforeach ?>
 			</div>

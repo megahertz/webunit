@@ -11,7 +11,7 @@ jQuery(function() {
 
 	$('.buttons .output').click(function(e) {
 		var $details = $(this).parents('.test').find('.details');
-		$details.find('.output').slideToggle();
+		$details.find('.output-panel').slideToggle();
 		$details.find('.trace-panel').hide();
 	});
 

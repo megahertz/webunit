@@ -34,19 +34,20 @@ class WebunitModule extends CWebModule
 	{
 		parent::init();
 
+		Yii::app()->user->stateKeyPrefix = 'webunit';
+		Yii::app()->user->loginUrl       = Yii::app()->createUrl($this->getId() . '/default/login');
+
 		Yii::app()->setComponents(array(
 			'errorHandler'  => array(
 				'class'       => 'CErrorHandler',
 				'errorAction' => $this->getId() . '/default/error',
 			),
-			'user'          => array(
-				'class'          => 'CWebUser',
-				'stateKeyPrefix' => 'webunit',
-				'loginUrl'       => Yii::app()->createUrl($this->getId() . '/default/login'),
-			),
 			'widgetFactory' => array(
 				'class'   => 'CWidgetFactory',
 				'widgets' => array()
+			),
+			'fixture' => array(
+				'class' => 'system.test.CDbFixtureManager',
 			)
 		), false);
 

@@ -33,7 +33,7 @@ class WuHelpers
 
 		$directory = new RecursiveDirectoryIterator($path);
 		$flattened = new RecursiveIteratorIterator($directory);
-		$files = new RegexIterator($flattened, '/^.+Test.+\.php$/Di');
+		$files = new RegexIterator($flattened, '/^.+Test\.php$/Di');
 
 		foreach($files as $f) {
 			$tests[] = self::TEST_TYPE_UNIT === $type ? new WuUnitTestFile($f) : new WuWebTestFile($f);
