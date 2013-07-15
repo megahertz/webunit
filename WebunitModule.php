@@ -8,6 +8,7 @@ class WebunitModule extends CWebModule
 	 * (DO NOT DO THIS UNLESS YOU KNOW THE CONSEQUENCE!!!)
 	 */
 	public $password;
+
 	/**
 	 * @var array the IP filters that specify which IP addresses are allowed to access WebunitModule.
 	 * Each array element represents a single filter. A filter can be either an IP address
@@ -19,11 +20,44 @@ class WebunitModule extends CWebModule
 	 */
 	public $ipFilters = array('127.0.0.1', '::1');
 
+	/**
+	 * @var string path where unit tests are located as Yii path alias
+	 */
 	public $pathUnitTests = 'application.tests.unit';
+
+	/**
+	 * @var string path where functional tests are located as Yii path alias
+	 */
 	public $pathWebTests  = 'application.tests.functional';
+
+	/**
+	 * @var bool If true use extension built-in PHPUnit otherwise use default
+	 */
 	public $useBuiltInPhpUnit = true;
+
+	/**
+	 * @var bool True if PHP errors must be handled by webunit
+	 */
 	public $registerShutdownHandler = true;
 
+	/**
+	 * If you want to override application components config when this extension is loaded
+	 * @example
+	 * 'componentsConfig' => [
+	 *     'db' => [
+	 *         'connectionString' => 'mysql:host=localhost;dbname=my_site_tests',
+	 *         'username' => 'user',
+	 *         'password' => 'password',
+	 *     ]
+	 * ]
+	 * @var array
+	 */
+	public $componentsConfig = array();
+
+	/**
+	 * @var array mapping from controller ID to controller configurations.
+	 * Please refer to {@link CWebApplication::controllerMap} for more details.
+	 */
 	public $controllerMap = array(
 		'default' => 'ext.webunit.controllers.WuController',
 	);
@@ -34,29 +68,14 @@ class WebunitModule extends CWebModule
 	{
 		parent::init();
 
-		Yii::app()->user->stateKeyPrefix = 'webunit';
-		Yii::app()->user->loginUrl       = Yii::app()->createUrl($this->getId() . '/default/login');
-
-		Yii::app()->setComponents(array(
-			'errorHandler'  => array(
-				'class'       => 'CErrorHandler',
-				'errorAction' => $this->getId() . '/default/error',
-			),
-			'widgetFactory' => array(
-				'class'   => 'CWidgetFactory',
-				'widgets' => array()
-			),
-			'fixture' => array(
-				'class' => 'system.test.CDbFixtureManager',
-			)
-		), false);
-
 		$this->setImport(array(
 			'webunit.components.*',
 			'webunit.models.*',
 			'application.tests.*',
 			'system.test.*',
 		));
+
+		$this->overrideComponents();
 
 		if ($this->useBuiltInPhpUnit) {
 			require_once dirname(__FILE__) . '/vendor/autoload.php';
@@ -144,5 +163,31 @@ class WebunitModule extends CWebModule
 			}
 			exit(1);
 		});
+	}
+
+	private function overrideComponents()
+	{
+		$componentsConfig = CMap::mergeArray(array(
+			'user' => array(
+				'stateKeyPrefix' => 'webunit',
+				'loginUrl' => Yii::app()->createUrl($this->getId() . '/default/login')
+			),
+			'errorHandler'  => array(
+				'class'       => 'CErrorHandler',
+				'errorAction' => $this->getId() . '/default/error',
+			),
+			'fixture' => array(
+				'class' => 'system.test.CDbFixtureManager',
+			)
+		), $this->componentsConfig);
+
+		$loadedComponents = Yii::app()->getComponents();
+		foreach ($componentsConfig as $component => $config) {
+			if (isset($config['class']) && isset($loadedComponents[$component])) {
+				$componentsConfig[$component] = Yii::createComponent($config);
+			}
+		}
+
+		Yii::app()->setComponents($componentsConfig, true);
 	}
 }
