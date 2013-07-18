@@ -34,7 +34,7 @@ class WuController extends CController
 	public function actionWeb($test)
 	{
 		$unit = new WuTestRunner();
-		$unit->addTest(WuUnitTestFile::fromRelativePathName($test));
+		$unit->addTest(WuWebTestFile::fromRelativePathName($test));
 		$this->render('unit', array(
 			'data'     => $unit->run(),
 			'testName' => $test
