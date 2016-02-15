@@ -1,9 +1,7 @@
 webunit
 =======
 
-Yii 1 PHPUnit web interface
-
-It's first alpha version, but you can use it now. It does not require PHPUnit installed
+The UI for using PHPUnit with Yii 1. It doesn't require the installed PHPUnit 
 
 Install
 =======
