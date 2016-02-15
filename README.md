@@ -1,20 +1,18 @@
 webunit
 =======
 
-Yii PHPUnit web interface
+Yii 1 PHPUnit web interface
 
 It's first alpha version, but you can use it now. It does not require PHPUnit installed
 
 Install
 =======
-1. Clone the code
+1. Download [the webunit extension](https://github.com/megahertz/webunit/archive/v0.1.0.zip)
 
-```
-	cd protected/extensions
-	git clone git@github.com:megahertz/webunit.git
-```
+2. Extract to protected/extensions
 
-2. Add extension to your application config
+3. Add extension to your application config
+
 ```php
     ...
 	'modules' => [
@@ -32,7 +30,6 @@ Install
 	],
 	...
 ```
-3. Go to http://you-app.url/webunit
-
+4. Go to the http://you-app.url/index.php?r=webunit
 
 The original idea http://mattmueller.me/blog/phpunit-test-report-unit-testing-in-the-browser
